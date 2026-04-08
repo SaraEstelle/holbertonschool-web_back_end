@@ -8,22 +8,11 @@ task_wait_random = __import__('3-tasks').task_wait_random
 async def task_wait_n(n: int, max_delay: int) -> List[float]:
     """Lance n fois task_wait_random en concurrent
     et retourne les délais triés.
-
-    variante de wait_n qui utilise task_wait pour créer les tâches
-    asynchrones. Retourne les dérais dans l'ordre croissant grace
-    à l'insertion triée de bisect sans utiliser sort().
-
-    Args:
-        n: nombre de coroutines à lancer simultanément
-        max_delay: délai maximum en secondes pour chaque task_wait_random
-
-    Réturns:
-        List[float]: liste des délais en ordre croissant.
     """
     delays = []
     tasks = []
     for i in range(n):
-        task.append(task_wait_random(max_delay))
+        tasks.append(task_wait_random(max_delay))
     for task in asyncio.as_completed(tasks):
         delay = await task
         delays.append(delay)
