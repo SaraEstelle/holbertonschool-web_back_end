@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """Module variant de wait_n utilisant task_wait_random."""
-
 import asyncio
 import bisect
 from typing import List
