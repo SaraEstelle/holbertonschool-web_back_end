@@ -9,7 +9,8 @@ task_wait_random = __import__('3-tasks').task_wait_random
 
 
 async def task_wait_n(n: int, max_delay: int) -> List[float]:
-    """Lance n fois task_wait_random en concurrent et retourne les délais triés.
+    """Lance n fois task_wait_random en concurrent
+    et retourne les délais triés.
 
     variante de wait_n qui utilise task_wait pour créer les tâches
     asynchrones. Retourne les dérais dans l'ordre croissant grace
