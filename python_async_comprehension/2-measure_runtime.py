@@ -6,7 +6,7 @@ coroutines en parallèle et mesure le temps total d'exécution résultant.
 """
 
 import asyncio
-import time
+from time import time
 
 async_comprehension = __import__('1-async_comprehension').async_comprehension
 
@@ -22,11 +22,7 @@ async def measure_runtime() -> float:
     Returns:
         float: Le temps total d'exécution en secondes (environ 10.0).
     """
-    start = time.perf_counter()
-    await asyncio.gather(
-        async_comprehension(),
-        async_comprehension(),
-        async_comprehension(),
-        async_comprehension()
-    )
-    return time.perf_counter() - start
+    start = time()
+    await asyncio.gather(*[async_comprehension() for _ in range(4)])
+    end = time()
+    return end - start
