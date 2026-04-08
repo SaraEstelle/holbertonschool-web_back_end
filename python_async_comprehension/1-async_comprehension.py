@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
-"""Module contenant un générateur asynchrone de nombres aléatoires."""
-import asyncio
-from random import uniform
-from typing import Generator
+"""Module utilisant une async comprehension pour collecter des valeurs.
+
+Ce module démontre l'utilisation des async comprehensions (PEP 530)
+pour collecter des résultats depuis un générateur asynchrone.
+"""
+from typing import List
+
+async_generator = __import__('0-async_generator').async_generator
 
 
-async def async_generator() -> Generator[float, None, None]:  # type: ignore
-    """Génère 10 nombres aléatoires flottants de manière asynchrone.
+async def async_comprehension() -> List[float]:
+    """Collecte 10 nombres aléatoires via une async comprehension.
 
-    Coroutine qui boucle 10 fois, attend 1 seconde de manière asynchrone
-    à chaque itération, puis produit un nombre aléatoire entre 0 et 10.
+    Utilise une async comprehension pour itérer sur async_generator
+    et collecter les 10 valeurs flottantes produites.
 
-    Yields:
-        float: Un nombre aléatoire entre 0.0 et 10.0.
+    Returns:
+        List[float]: Une liste de 10 nombres aléatoires entre 0.0 et 10.0.
     """
-    for _ in range(10):
-        await asyncio.sleep(1)
-        yield uniform(0, 10)
+    return [val async for val in async_generator()]
