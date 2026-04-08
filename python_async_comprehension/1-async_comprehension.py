@@ -6,11 +6,11 @@ aléatoires flottants avec une pause d'une seconde entre chaque valeur.
 """
 
 import asyncio
-import random
-from typing import AsyncGenerator
+from random import uniform
+from typing import Generator
 
 
-async def async_generator() -> AsyncGenerator[float, None]:
+async def async_generator() -> Generator[float, None , None]: #type: ignore
     """Génère 10 nombres aléatoires flottants de manière asynchrone.
 
     Coroutine qui boucle 10 fois, attend 1 seconde de manière asynchrone
@@ -21,4 +21,4 @@ async def async_generator() -> AsyncGenerator[float, None]:
     """
     for _ in range(10):
         await asyncio.sleep(1)
-        yield random.uniform(0, 10)
+        yield uniform(0, 10)
