@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """Module de lancement concurrent de plusieurs coroutines wait_random."""
-
 import asyncio
 from typing import List
 
@@ -25,4 +24,3 @@ async def wait_n(n: int, max_delay: int) -> List[float]:
         delays.append(delay)
 
     return delays
-
