@@ -44,18 +44,6 @@ class Server:
 
         return self.__dataset
 
-    def indexed_dataset(self) -> Dict[int, List]:
-        """
-        Return the dataset indexed by its original position, starting at 0.
-        Keys are stable integers; deleting a key does not shift other keys.
-        """
-        if self.__indexed_dataset is None:
-            with open(self.DATA_FILE) as f:
-                reader = csv.reader(f)
-                dataset = [row for row in reader]
-            self.__dataset = dataset[1:]
-        return self.__dataset
-
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
         """
         Return the appropriate page of data from the baby name dataset.
@@ -78,7 +66,7 @@ class Server:
         prev_page, total_page.
         """
         data = self.get_page(page, page_size)
-        total_page =  math.ceil(len(self.dataset()) / page_size)
+        total_page = math.ceil(len(self.dataset()) / page_size)
 
         return {
             'page_size': len(data),
