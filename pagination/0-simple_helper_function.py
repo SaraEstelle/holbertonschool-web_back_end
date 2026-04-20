@@ -17,6 +17,6 @@ def index_range(page: int, page_size: int) -> Tuple[int, int]:
         Returns:
             A tuple  ( startt, end) to use as slice bounds on a list.
     """
-    start =(page - 1) * page_size
+    start = (page - 1) * page_size
     end = page * page_size
-    return ( start, end)
+    return (start, end)
