@@ -1,0 +1,11 @@
+# Node
+node_modules/
+**/node_modules/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
