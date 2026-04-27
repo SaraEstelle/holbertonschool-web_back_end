@@ -14,6 +14,6 @@ export function getLast() {
 // → on utilise let car la valeur change
 export function taskNext() {
   let combination = 'But sometimes let'; // let : valeur modifiée ensuite
-  combination += getLast();              // réassignation : justifie let
+  combination += getLast(); // réassignation : justifie let
   return combination;
 }
