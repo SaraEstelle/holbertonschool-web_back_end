@@ -6,6 +6,6 @@ export default function handleProfileSingup() {
             console.log(`${photo.body}${user.firstName}${user.lastName}`);
         })
         .catch(() => {
-        console.log(`Singip system offline`);
+        console.log(`Singup system offline`);
         });
 }
