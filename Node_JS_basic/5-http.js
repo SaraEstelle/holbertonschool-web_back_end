@@ -13,15 +13,14 @@ function readDatabase(filePath) {
 
       const lines = data
         .split('\n')
-        .filter((line) => line.trim() !== '')
-        .slice(1);
+        .filter((line) => line.trim() !== '');
+
+      const students = lines.slice(1);
 
       const groups = {};
 
-      lines.forEach((line) => {
-        const fields = line.split(',');
-        const firstname = fields[0];
-        const field = fields[3];
+      students.forEach((line) => {
+        const [firstname, , , field] = line.split(',');
 
         if (!groups[field]) {
           groups[field] = [];
@@ -38,18 +37,14 @@ const app = http.createServer((req, res) => {
     res.writeHead(200, { 'Content-type': 'text/plain' });
     res.end('Hello Holberton School!');
   } else if (req.url === '/students') {
-
     readDatabase(databasePath)
       .then(({ total, groups }) => {
         let body = 'This is the list of our students\n';
         body += `Number of students: ${total}\n`;
 
-        const sortedFields = Object.keys(groups).sort((a, b) =>
-          a.toLowerCase().localeCompare(b.toLowerCase())
-        );
-        sortedFields.forEach((field) => {
-          const names = groups[field].join(', ');
-          body += `Number of students in ${field}: ${groups[field].length}. List: ${names}\n`;
+        Object.keys(groups).forEach((field) => {
+          const list = groups[field].join(', ');
+          body += `Number of students in ${field}: ${groups[field].length}. List: ${list}\n`;
         });
 
         res.writeHead(200, { 'Content-Type': 'text/plain' });
