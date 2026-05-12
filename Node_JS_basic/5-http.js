@@ -1,60 +1,36 @@
 const http = require('http');
-const fs = require('fs');
+const countStudents = require('./3-read_file_async');
 
 const databasePath = process.argv[2];
 
-function readDatabase(filePath) {
-  return new Promise((resolve, reject) => {
-    fs.readFile(filePath, 'utf8', (err, data) => {
-      if (err) {
-        reject(new Error('Cannot load the database'));
-        return;
-      }
+const app = http.createServer(async (req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
 
-      const lines = data
-        .split('\n')
-        .filter((line) => line.trim() !== '');
-
-      const students = lines.slice(1);
-
-      const groups = {};
-
-      students.forEach((line) => {
-        const [firstname, , , field] = line.split(',');
-
-        if (!groups[field]) {
-          groups[field] = [];
-        }
-        groups[field].push(firstname);
-      });
-      resolve({ total: students.length, groups });
-    });
-  });
-}
-
-const app = http.createServer((req, res) => {
   if (req.url === '/') {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
     res.end('Hello Holberton School!');
   } else if (req.url === '/students') {
-    readDatabase(databasePath)
-      .then(({ total, groups }) => {
-        let body = 'This is the list of our students\n';
-        body += `Number of students: ${total}\n`;
+    const responseParts = ['This is the list of our students'];
+    const originalLog = console.log;
 
-        Object.keys(groups).forEach((field) => {
-          const list = groups[field].join(', ');
-          body += `Number of students in ${field}: ${groups[field].length}. List: ${list}\n`;
-        });
+    console.log = (msg) => responseParts.push(msg);
 
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
-        res.end(body);
-      })
-      .catch((err) => {
-        res.writeHead(500, { 'Content-Type': 'text/plain' });
-        res.end(err.message);
-      });
+    try {
+      await countStudents(databasePath);
+
+      console.log = originalLog;
+
+      res.end(responseParts.join('\n'));
+    } catch (error) {
+      console.log = originalLog;
+      res.end(`${responseParts[0]}\n${error.message}`);
+    }
+  } else {
+    res.statusCode = 404;
+    res.end('Not Found');
   }
 });
+
 app.listen(1245);
+
 module.exports = app;
