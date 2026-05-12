@@ -11,8 +11,8 @@ class StudentsController {
         const fields = Object.keys(groups);
 
         const total = fields.reduce(
-            (acc, field) => acc +groups[field].length,
-            0
+          (acc, field) => acc + groups[field].length,
+          0
         );
         body += `Number of students: ${total}\n`;
 
