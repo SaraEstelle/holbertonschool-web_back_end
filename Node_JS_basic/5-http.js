@@ -27,7 +27,7 @@ function readDatabase(filePath) {
         }
         groups[field].push(firstname);
       });
-      resolve({ total: lines.length, groups });
+      resolve({ total: students.length, groups });
     });
   });
 }
