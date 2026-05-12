@@ -21,7 +21,7 @@ class StudentsController {
           body += `Number of students in ${field}: ${groups[field].length}. List: ${list}\n`;
         });
 
-        res.status(200).type('text').send(body.trimEnd());
+        res.status(200).type('text').send(body);
       })
       .catch(() => {
         res.status(500).send('Cannot load the database');
