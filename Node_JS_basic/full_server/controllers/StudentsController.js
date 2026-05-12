@@ -8,7 +8,7 @@ class StudentsController {
       .then((groups) => {
         let body = 'This is the list of our students\n';
 
-        const fields = Object.keys(groups);
+        const fields = Object.keys(groups).sort();
 
         const total = fields.reduce(
           (acc, field) => acc + groups[field].length,
