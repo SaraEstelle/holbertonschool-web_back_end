@@ -6,14 +6,20 @@ const readDatabase = (path) => new Promise((resolve, reject) => {
       reject(new Error('Cannot load the database'));
       return;
     }
-    const lines = data.split('\n').at.filter((line) => line.trim() !== '');
+
+    const lines = data
+      .trim()
+      .split('\n')
+      .slice(1);
+
     const studentsByField = {};
 
-    const rows = lines.slices(1);
+    for (const line of lines) {
+      const [firstname, , , field] = line.split(',');
 
-    for (const row of rows) {
-      const [firstname, , , field] = row.split(',');
-      if (!studentsByField[field]) studentsByField[field] = [];
+      if (!studentsByField[field]) {
+        studentsByField[field] = [];
+      }
       studentsByField[field].push(firstname);
     }
     resolve(studentsByField);
