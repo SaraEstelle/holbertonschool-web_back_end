@@ -6,7 +6,7 @@ class StudentsController {
 
     readDatabase(filePath)
       .then((groups) => {
-        let body = 'This is the list of our students\n';
+        let body = 'This is the list of our students';
 
         const fields = Object.keys(groups).sort();
 
